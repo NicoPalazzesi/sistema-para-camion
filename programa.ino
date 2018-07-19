@@ -89,3 +89,25 @@ void sensarBolsa(){
   }
 }
 
+//Muestra valores actuales en el LCD
+void displayLCD(){
+  //Borro fila 1
+  lcd.setCursor(0, 1);
+  lcd.print("                ");
+  
+  //Nro de camion
+  lcd.setCursor(0, 1);
+  lcd.print(numeroCamion);
+
+  //Bolsas en curso
+  lcd.setCursor(2, 1);
+  lcd.print(contador_bolsaActual);
+
+  //Bolsas en camion
+  lcd.setCursor(6, 1);
+  lcd.print(contador_bolsaCamion);
+  
+  //Bolsas en totalion
+  lcd.setCursor(11, 1);
+  lcd.print(contador_bolsaTotal);
+}

@@ -1,10 +1,16 @@
+#include <LiquidCrystal.h>
+
+// Inicializo la libreria
+//Rs, E,D4, D5, D6, D7
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
+
 //Contadores
 int contador_bolsaCamion; //Bolsas totales cargadas en el camion
 int contador_bolsaTotal; //Bolsas totales cargadas en todos los camiones
 int numeroCamion; //Indica el camion actual
 
 //Sensores
-int sensor_bolsa = A7; //Pin del sensor que detecta las bolsas
+int sensor_bolsa = 2; //Pin del sensor que detecta las bolsas
 
 //Botones
 int boton_bolsaMas = A0; //Boton para agregar una bolsa al contador actual
@@ -22,13 +28,22 @@ void setup() {
   //Sensores
   pinMode(sensor_bolsa,INPUT);
 
+    // Declaro numero de columnas y filas:
+  lcd.begin(16, 2);
+
+  //Escribo fila de encabezados
+  lcd.setCursor(0, 0);
+  lcd.print("CAM BOLSAS TOTAL");
+
   //Valores iniciales de los contadores
   reset();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  displayLCD();
+  botones();
+  sensarBolsa();
+  delay(200);
 }
 
 //Inicializa los contadores
@@ -57,22 +72,24 @@ void botones(){
   }
 }
 
+
 //Comprueba si paso una bolsa por el sensor y la agrega al contador
 void sensarBolsa(){
-  static int pulso_anterior = HIGH;
-  static int tiempo_inicio;
   int pulso_actual;
-  int tiempo_fin;
-  int tiempo_total;
+  static int pulso_anterior = LOW;
+  static unsigned long tiempo_inicio;
+  unsigned long tiempo_fin;
+  unsigned long tiempo_total;
 
   pulso_actual = digitalRead(sensor_bolsa);
   if(pulso_actual != pulso_anterior){
-    if(pulso_anterior = HIGH){
+    if(pulso_anterior == LOW){
       tiempo_inicio=millis();
-    }else{
+    }
+    if(pulso_anterior == HIGH){
       tiempo_fin=millis();
       tiempo_total = tiempo_fin - tiempo_inicio;
-      if( tiempo_total > 2000 ){
+      if( tiempo_total >= 2000 ){
         contador_bolsaCamion++; 
       }
     }
@@ -87,15 +104,11 @@ void displayLCD(){
   lcd.print("                ");
   
   //Nro de camion
-  lcd.setCursor(0, 1);
+  lcd.setCursor(1, 1);
   lcd.print(numeroCamion);
 
-  //Bolsas en curso
-  lcd.setCursor(2, 1);
-  lcd.print(contador_bolsaActual);
-
   //Bolsas en camion
-  lcd.setCursor(6, 1);
+  lcd.setCursor(5, 1);
   lcd.print(contador_bolsaCamion);
   
   //Bolsas en totalion

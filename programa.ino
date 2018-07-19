@@ -55,24 +55,24 @@ void reset(){
 
 //Comprueba si se presiono un boton y realiza la acción pertinente en cada caso
 void botones(){
-  if( analogRead(boton_bolsaMas) > 900 ){
+  if( digitalRead(boton_bolsaMas) == HIGH ){
     contador_bolsaActual++;
   }
-  if( analogRead(boton_bolsaMenos) > 900 ){
+  if( digitalRead(boton_bolsaMenos) == HIGH ){
     if( contador_bolsaActual > 0 )
       contador_bolsaActual--;
   }
-  if( analogRead(boton_totalizador) > 900 ){
+  if( digitalRead(boton_totalizador) == HIGH ){
     contador_bolsaCamion += contador_bolsaActual;
     contador_bolsaActual = 0;
   }
-  if( analogRead(boton_camionSiguiente) > 900 ){
+  if( digitalRead(boton_camionSiguiente) == HIGH ){
     contador_bolsaTotal += contador_bolsaCamion + contador_bolsaActual;
     contador_bolsaCamion = 0;
     contador_bolsaActual = 0;
     numeroCamion++;
   }
-  if( analogRead(boton_reset) > 900 ){
+  if( digitalRead(boton_reset) == HIGH ){
     reset();
   }
 }

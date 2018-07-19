@@ -1,10 +1,3 @@
-//Incluyo libreria para manejo del LCD
-#include <LiquidCrystal.h>
-
-// Inicializo la libreria
-//Rs, E,D4, D5, D6, D7
-LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
-
 //Contadores
 int contador_bolsaActual; //Bolsas de la tanda actual del camion
 int contador_bolsaCamion; //Bolsas totales del camion
@@ -22,10 +15,6 @@ int boton_camionSiguiente = A3; //Boton para pasar al siguiente camion
 int boton_reset = A4; //Boton para resetear los contadores y camiones
 
 void setup() {
-  // Numero de columnas y filas:
-  lcd.begin(16, 2);
-  lcd.print("MOLINO 123");
-  
   //Configuración de Entrada/Salida
   //Botones
   pinMode(boton_bolsaMas,INPUT);
@@ -79,6 +68,8 @@ void botones(){
 
 //Comprueba si paso una bolsa por el sensor y la agrega al contador
 void sensarBolsa(){
-  
+  static int pulso_anterior = 1;
+  static int 
+  int pulso actual;
 }
 

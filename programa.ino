@@ -55,20 +55,29 @@ void reset(){
 
 //Comprueba si se presiono un boton y realiza la acción pertinente en cada caso
 void botones(){
-  if( digitalRead(boton_bolsaMas) == HIGH ){
-    contador_bolsaCamion++;
-  }
-  if( digitalRead(boton_bolsaMenos) == HIGH ){
-    if( contador_bolsaCamion > 0 )
-      contador_bolsaCamion--;
-  }
-  if( digitalRead(boton_camionSiguiente) == HIGH ){
-    contador_bolsaTotal += contador_bolsaCamion;
-    contador_bolsaCamion = 0;
-    numeroCamion++;
-  }
-  if( digitalRead(boton_reset) == HIGH ){
-    reset();
+  static unsigned long tiempo_inicio = 0;
+  unsigned long tiempo_fin=millis();
+  unsigned long tiempo_total;
+  tiempo_total = tiempo_fin - tiempo_inicio;
+  if( tiempo_total >= 400 ){
+    if( digitalRead(boton_bolsaMas) == HIGH ){
+      contador_bolsaCamion++;
+      tiempo_inicio=millis();
+    }
+    if( digitalRead(boton_bolsaMenos) == HIGH ){
+      if( contador_bolsaCamion > 0 )
+        contador_bolsaCamion--;
+        tiempo_inicio=millis();
+    }
+    if( digitalRead(boton_camionSiguiente) == HIGH ){
+      contador_bolsaTotal += contador_bolsaCamion;
+      contador_bolsaCamion = 0;
+      numeroCamion++;
+      tiempo_inicio=millis();
+    }
+    if( digitalRead(boton_reset) == HIGH ){
+     reset();
+    }
   }
 }
 

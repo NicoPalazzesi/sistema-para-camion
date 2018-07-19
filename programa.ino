@@ -59,7 +59,7 @@ void botones(){
 
 //Comprueba si paso una bolsa por el sensor y la agrega al contador
 void sensarBolsa(){
-  static int pulso_anterior = 1;
+  static int pulso_anterior = HIGH;
   static int tiempo_inicio;
   int pulso_actual;
   int tiempo_fin;
@@ -67,16 +67,16 @@ void sensarBolsa(){
 
   pulso_actual = digitalRead(sensor_bolsa);
   if(pulso_actual != pulso_anterior){
-    pulso_anterior = pulso_actual;
-    if(pulso_actual = LOW)
+    if(pulso_anterior = HIGH){
       tiempo_inicio=millis();
-    else{
+    }else{
       tiempo_fin=millis();
       tiempo_total = tiempo_fin - tiempo_inicio;
       if( tiempo_total > 2000 ){
         contador_bolsaCamion++; 
       }
     }
+    pulso_anterior = pulso_actual;
   }
 }
 
